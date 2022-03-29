@@ -8,26 +8,19 @@ namespace Microsoft.Azure.WebJobs.Extensions.PostgreSql;
 public class PostgreSqlAttribute : Attribute
 {
     /// <summary>
-    /// Initializes a new instance of the <see cref="SqlAttribute/>"/> class.
-    /// </summary>
-    /// <param name="commandText">The text of the command</param>
-    public PostgreSqlAttribute(string commandText)
-    {
-        CommandText = commandText ?? throw new ArgumentNullException(nameof(commandText));
-    }
-
-    /// <summary>
     /// The name of the app setting where the PostgreSQL connection string is stored.
     /// </summary>
     [AppSetting]
     public string ConnectionStringSetting { get; set; }
 
     /// <summary>
-    /// For an input binding, either a SQL query or stored procedure that will be run in the database referred to in the ConnectionString.
-    /// For an output binding, the table name.
+    /// The SQL query that retrieves records for a input binding.
     /// </summary>
     [AutoResolve]
-    public string CommandText { get; }
+    public string Query { get; set; }
+
+    [AutoResolve]
+    public string TableName { get; set; }
 
     /// <summary>
     /// Specifies whether <see cref="CommandText"/> refers to a stored procedure or SQL query string.
